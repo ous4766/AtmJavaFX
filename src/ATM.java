@@ -62,7 +62,7 @@ public class ATM {
     }
 
     public static void printUserMenu(User theUser, Scanner sc) {
-
+//
         // print a summary of the user accounts
         theUser.printAccountsSummary();
 
