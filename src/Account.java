@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Account {
 
@@ -11,6 +12,8 @@ public class Account {
     private User holder; // the user who owns this account
 
     private ArrayList<Transaction> transactions; // list of transaction in this account
+    
+    private double balance;
 
     /**
      *
@@ -60,16 +63,9 @@ public class Account {
      * get the balance of the accounts by adding the amount o transactions
      * @return
      */
-    public double getBalance(){
-
-        double balance = 0;
-
-        for (Transaction t : this.transactions) {
-            balance += t.getAmount();
-        }
-        return balance;
-        }
-
+    public double getBalance() {
+        return this.balance;
+    }
     /**
      * print transaction history of the amount
      */
@@ -85,9 +81,46 @@ public class Account {
      * to create new transaction
      * @param amount the amount transacted
      */
-    public void addTransaction(double amount, String memo){
-        //create a new transaction object and add to the list
-        Transaction newTrans = new Transaction(amount,memo,this);
-        this.transactions.add(newTrans);
+    public void addTransaction(double amount, String memo) {
+        if (amount > 0) {
+            // Update the balance and add the transaction
+            balance += amount;
+            transactions.add(new Transaction(amount, memo, this));
+        } else {
+            // Handle invalid transaction amount
+            System.out.println("Invalid transaction: Please enter a valid amount");
+        }
+    }
+
+    public List<Transaction> getTransactions(){
+        return this.transactions;
+    }
+
+    public void transfer(Account destinationAccount, double amount) {
+        if (amount > 0 && this.balance >= amount) {
+            this.balance -= amount;
+            destinationAccount.deposit(amount, "Transfer from " + this.uuid);
+        } else {
+            System.out.println("Invalid transfer: Insufficient funds or invalid amount");
+        }
+    }
+    
+    public void withdraw(double amount, String memo) {
+        if (amount > 0 && this.balance >= amount) {
+            this.balance -= amount;
+            addTransaction(-amount, memo);
+        } else {
+            System.out.println("Invalid withdrawal: Insufficient funds or invalid amount");
+        }
+    }
+    public void deposit(double amount, String memo) {
+        if (amount > 0) {
+            // Update the balance and add the transaction
+            balance += amount;
+            transactions.add(new Transaction(amount, memo, this));
+        } else {
+            // Handle invalid deposit amount
+            System.out.println("Invalid deposit: Please enter a valid amount");
+        }
     }
 }

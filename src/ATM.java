@@ -1,4 +1,5 @@
 
+
 import java.util.Scanner;
 public class ATM {
     public static void main(String[] args) {
@@ -182,7 +183,7 @@ public class ATM {
         // transfer
         theUser.addAcctTransaction(fromAcct, -1*amount, String.format("Transfer to account %s", theUser.getAcctUUID(toAcct)));
         theUser.addAcctTransaction(toAcct, amount, String.format("Transfer to account %s", theUser.getAcctUUID(fromAcct)));
-    }
+}
 
     /**
      * process the fund withdraw from account

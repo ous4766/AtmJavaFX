@@ -1,5 +1,6 @@
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.security.MessageDigest;
 public class User {
 
@@ -21,6 +22,7 @@ public class User {
      * @param theBank the bank object from the users customer
      */
     public User(String firstName,String lastName, String pin, Bank theBank){
+
 
         //set user's name
 
@@ -47,8 +49,8 @@ public class User {
 
         //print log
         System.out.printf("New user %s, %s with ID %s created.\n", firstName,lastName, this.uuid);
-
-
+        
+       
     }
 
     /**
@@ -58,6 +60,14 @@ public class User {
     public void addAccount(Account anAcct) {
         this.accounts.add(anAcct);
     }
+    public Account getAccount(int index) {
+        if (index >= 0 && index < this.accounts.size()) {
+            return this.accounts.get(index);
+        }
+        return null;
+    }
+    
+    
     public String getUUID(){
         return this.uuid;
     }
@@ -99,7 +109,8 @@ public class User {
      * @return the number accounts
      */
     public int numAccounts(){
-        return this.accounts.size();
+        int size = this.accounts.size();
+        return size;
     }
 
     /**
@@ -133,4 +144,19 @@ public class User {
     public void addAcctTransaction(int acctIDx, double amount, String memo){
         this.accounts.get(acctIDx).addTransaction(amount,memo);
     }
+
+       public List<Transaction> getAcctTransactions(int acctIDx) {
+        if (acctIDx >= 0 && acctIDx < this.accounts.size()) {
+            return this.accounts.get(acctIDx).getTransactions();
+        }
+        return null;
+    }
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
+/*
+    public Account addAccount(int i) {
+        return null;
+    }
+    */
 }
